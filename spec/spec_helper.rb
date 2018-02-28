@@ -24,5 +24,9 @@ RSpec.configure do |config|
     Tag.all().each() do |tag|
       tag.destroy()
     end
+
+    Amount.all().each() do |amount|
+      amount.destroy()
+    end
   end
 end

@@ -9,8 +9,8 @@ describe('Recipe') do
   it("recipe ingredient relationship") do
     recipe = Recipe.create({:recipe => "Pasta", :instructions => "Boil"})
     ingredient = Ingredient.create({:ingredient => "noodles"})
-    recipe.ingredients_recipes.push(ingredient)
-    expect(recipe.ingredients_recipes).to(eq([ingredient]))
+    recipe.ingredients.push(ingredient)
+    expect(recipe.ingredients.first).to(eq(ingredient))
   end
 
   it("recipe tag relationship") do

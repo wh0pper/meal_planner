@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
 class Ingredient < ActiveRecord::Base
-  has_many :ingredients_recipes
-  has_many :recipes, through: :ingredients_recipes
+  has_many :amounts
+  has_many :recipes, through: :amounts
 end
