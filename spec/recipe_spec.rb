@@ -19,4 +19,11 @@ describe('Recipe') do
     recipe.tags.push(tag)
     expect(recipe.tags).to(eq([tag]))
   end
+
+  it("finds a recipe by an ingredient") do
+  recipe = Recipe.create({:recipe => "Pasta", :instructions => "Boil"})
+  ingredient = Ingredient.create({:ingredient => "noodles"})
+  recipe.ingredients.push(ingredient)
+  expect(ingredient.recipes.first).to(eq(recipe))
+  end
 end
