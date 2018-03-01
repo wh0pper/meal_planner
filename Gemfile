@@ -6,6 +6,7 @@ gem 'sinatra-contrib', :require => 'sinatra/reloader'
 gem 'sinatra-activerecord'
 gem 'rake'
 gem "shoulda-matchers", '~> 2.0'
+gem 'fatsecret-api'
 
 group(:test) do
   gem 'rspec'

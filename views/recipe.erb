@@ -13,12 +13,21 @@
 
 
 <table>
-  <col width="90%">
+  <col width="75%">
+  <col width="20%">
+  <col width="5%">
   <th>Ingredients</th>
+  <th>Amount in grams</th>
   <th>Remove</th>
+
   <% @ingredients.each do |ingredient| %>
   <tr>
-    <td><%= ingredient.ingredient %></td>
+    <td><%= Amount.find_by({:ingredient_id => ingredient.id}).amount %>g <%= ingredient.ingredient %></td>
+    <td><form action="/recipe/<%= @recipe.id %>/update_amount" method="post">
+      <input type="hidden" name="ingredient_to_update" value="<%= ingredient.id %>">
+      <input style="width: 50px;" type="number" name="amount" id="amount" autocomplete="off" required>
+      <button type="submit" class="remove_ingredient_button">&#10004;</button>
+    </form></td>
     <td><form action="/recipe/<%= @recipe.id %>/delete_ingredient" method=post id="ingredient_delete">
           <input name="_method" type="hidden" value="delete">
           <input type="hidden" name="ingredient_to_delete" value="<%= ingredient.id %>">
@@ -71,5 +80,6 @@
   <% end %>
 <% end %>
 
+<a href="/nutrition/<%= @recipe.id %>">Click here for nutrition information</a><br>
 
 <a href="/">Return to recipe list</a>

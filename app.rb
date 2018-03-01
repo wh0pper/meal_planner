@@ -1,13 +1,19 @@
 require("bundler/setup")
 require("pry")
+# require 'fatsecret-api'
+
 Bundler.require(:default)
 
 Dir[File.dirname(__FILE__) + '/lib/*.rb'].each { |file| require file }
+
+
 
 get('/') do
   @recipes = Recipe.all
   @tags = Tag.all
   @ingredients = Ingredient.all
+  # food = FatSecret.search('milk')
+  # results = FatSecret.food(800)
   erb:index
 end
 
@@ -37,6 +43,8 @@ post('/recipe/:id/new_ingredient') do
   end
   if !existing_ingredients.include?(new_ingredient)
     @recipe.ingredients.push(new_ingredient)
+    amount = Amount.find_by({:ingredient_id => new_ingredient.id})
+    amount.update({:amount => '0'})
   else
     @ingredient_error = "Ingredient already in recipe"
   end
@@ -95,6 +103,10 @@ end
 
 delete('/delete_recipe') do
   recipe_delete = Recipe.find(params['recipe_to_delete'].to_i)
+  ingredients_delete =recipe_delete.ingredients
+  ingredients_delete.each  do |ingredient|
+    ingredient.destroy
+  end
   recipe_delete.destroy
   @recipes = Recipe.all
   @tags = Tag.all
@@ -112,4 +124,24 @@ post('/recipe_finder') do
   @ingredient = Ingredient.find(params['ingredient'].to_i)
   @recipes = @ingredient.recipes
   erb:search
+end
+
+get('/nutrition/:id') do
+  @recipe = Recipe.find(params['id'].to_i)
+  @amounts = @recipe.amounts
+  @ingredients = @recipe.ingredients
+  erb:nutrition
+end
+
+post('/recipe/:id/update_amount') do
+  new_amount = params['amount'].to_i
+  @recipe = Recipe.find(params['id'].to_i)
+  ingredient = Ingredient.find(params['ingredient_to_update'].to_i)
+  @recipe.amounts.where({:ingredient_id => ingredient.id}).update({:amount => new_amount})
+  @ingredients = @recipe.ingredients
+  @tags = @recipe.tags
+  instructions = @recipe.instructions
+  @instructions_arr = instructions.split(",")
+  @amounts = @recipe.amounts
+  erb:recipe
 end
