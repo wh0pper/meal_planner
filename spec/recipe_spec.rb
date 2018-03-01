@@ -9,7 +9,6 @@ describe('Recipe') do
   it("recipe ingredient relationship") do
     recipe = Recipe.create({:recipe => "Pasta", :instructions => "Boil"})
     ingredient = Ingredient.create({:ingredient => "noodles"})
-    binding.pry
     recipe.ingredients.push(ingredient)
     expect(recipe.ingredients.first).to(eq(ingredient))
   end

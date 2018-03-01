@@ -30,8 +30,12 @@ end
 
 post('/recipe/:id/new_ingredient') do
   @recipe = Recipe.find(params['id'].to_i)
-  new_ingredient = Ingredient.create({:ingredient => params['ingredient']})
-  @recipe.ingredients.push(new_ingredient)
+  new_ingredient = Ingredient.new({:ingredient => params['ingredient']})
+  if new_ingredient.save
+    @recipe.ingredients.push(new_ingredient)
+  else
+    @ingredient_error = "Ingredient already exists"  
+  end
   instructions = @recipe.instructions
   @instructions_arr = instructions.split(",")
   @tags = @recipe.tags

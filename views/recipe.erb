@@ -6,6 +6,9 @@
   <label for="ingredient">Add an ingredient</label>
   <input type="text" name="ingredient" id="ingredient" autocomplete="off" required>
   <button type="submit" class="btn btn-info">Add</button>
+  <% if @ingredient_error %>
+    <%= @ingredient_error %>
+  <% end %>
 </form>
 
 
