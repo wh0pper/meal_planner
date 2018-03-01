@@ -7,7 +7,7 @@
   <% @recipes.each do |recipe| %>
     <tr>
       <td><a href="/recipe/<%=recipe.id%>"><%= recipe.recipe %></a></td>
-      <td><form action="/" method=post>
+      <td><form action="/delete_recipe" method=post>
         <input name="_method" type="hidden" value="delete">
         <input type="hidden" name="recipe_to_delete" value="<%= recipe.id %>">
         <button type="submit" class="remove_ingredient_button">&#10005;</button>
@@ -16,16 +16,26 @@
   <% end %>
 </table>
 
-<h2>Tags:</h2>
-<% if @tags %>
-  <% @tags.each do |tag| %>
-  <span class="tag"><%= tag.tag %></span>
-  <% end %>
-<% end %>
-
 <h2>Add a new recipe:</h2>
 <form action="/" method="post">
 <label for="recipe">Add a recipe</label>
 <input type="text" name="recipe" id="recipe" autocomplete="off">
 <button type="submit" class="btn btn-info">Add recipe!</button>
+</form>
+
+<h2>Tags:</h2>
+<% if @tags %>
+<% @tags.each do |tag| %>
+<span class="tag"><a href="/tag/<%= tag.id %>"><%= tag.tag %></a></span>
+<% end %>
+<% end %>
+
+<h2>Find recipes by ingredient:</h2>
+<form class="form-group" action="/recipe_finder" method="post">
+<select class="form-control" name="ingredient">
+  <% @ingredients.each do |ingredient| %>
+    <option value="<%= ingredient.id %>"><%= ingredient.ingredient %></option>
+  <% end %>
+</select>
+<button type="submit" class="btn btn-info">Find</button>
 </form>

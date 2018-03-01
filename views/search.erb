@@ -1,0 +1,17 @@
+<h1>Recipe Box</h1>
+
+<% if @tag %>
+  <h2>All recipes for '<%= @tag.tag %>' tag:</h2>
+<% elsif @ingredient %>
+  <h2>All recipes containing '<%= @ingredient.ingredient %>':</h2>
+<% end %>
+<table>
+  <th>Recipes</th>
+  <% @recipes.each do |recipe| %>
+    <tr>
+      <td><a href="/recipe/<%=recipe.id%>"><%= recipe.recipe %></a></td>
+    </tr>
+  <% end %>
+</table>
+
+<a href="/">Return to recipe list</a>

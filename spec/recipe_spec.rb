@@ -9,6 +9,7 @@ describe('Recipe') do
   it("recipe ingredient relationship") do
     recipe = Recipe.create({:recipe => "Pasta", :instructions => "Boil"})
     ingredient = Ingredient.create({:ingredient => "noodles"})
+    binding.pry
     recipe.ingredients.push(ingredient)
     expect(recipe.ingredients.first).to(eq(ingredient))
   end
@@ -26,4 +27,12 @@ describe('Recipe') do
   recipe.ingredients.push(ingredient)
   expect(ingredient.recipes.first).to(eq(recipe))
   end
+end
+
+describe(Recipe) do
+  it { should have_many(:ingredients) }
+end
+
+describe(Recipe) do
+  it { should validate_presence_of(:recipe) }
 end
