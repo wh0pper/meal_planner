@@ -88,5 +88,6 @@ delete('/') do
   recipe_delete = Recipe.find(params['recipe_to_delete'].to_i)
   recipe_delete.destroy
   @recipes = Recipe.all
+  @tags = Tag.all
   erb:index
 end
