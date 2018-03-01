@@ -1,6 +1,28 @@
 <h1>Recipe Box</h1>
 <h2>Your recipes:</h2>
 
+<table>
+  <th>Recipes</th>
+  <th>Remove</th>
+  <% @recipes.each do |recipe| %>
+    <tr>
+      <td><a href="/recipe/<%=recipe.id%>"><%= recipe.recipe %></a></td>
+      <td><form action="/" method=post>
+        <input name="_method" type="hidden" value="delete">
+        <input type="hidden" name="recipe_to_delete" value="<%= recipe.id %>">
+        <button type="submit" class="remove_ingredient_button">&#10005;</button>
+      </form></td>
+    </tr>
+  <% end %>
+</table>
+
+<h2>Tags:</h2>
+<% if @tags %>
+  <% @tags.each do |tag| %>
+  <span class="tag"><%= tag.tag %></span>
+  <% end %>
+<% end %>
+
 <h2>Add a new recipe:</h2>
 <form action="/" method="post">
 <label for="recipe">Add a recipe</label>

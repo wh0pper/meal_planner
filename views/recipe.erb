@@ -1,0 +1,73 @@
+<h1><%= @recipe.recipe %></h1>
+
+
+<h2>Add ingredients:</h2>
+<form action="/recipe/<%= @recipe.id %>" method="post">
+  <input name="_method" type="hidden" value="patch">
+  <label for="ingredient">Add an ingredient</label>
+  <input type="text" name="ingredient" id="ingredient" autocomplete="off">
+  <button type="submit" class="btn btn-info">Add</button>
+</form>
+
+
+<table>
+  <col width="90%">
+  <th>Ingredients</th>
+  <th>Remove</th>
+  <% @ingredients.each do |ingredient| %>
+  <tr>
+    <td><%= ingredient.ingredient %></td>
+    <td><form action="/recipe/<%= @recipe.id %>" method=post id="ingredient_delete">
+          <input name="_method" type="hidden" value="delete">
+          <input type="hidden" name="ingredient_to_delete" value="<%= ingredient.id %>">
+          <button type="submit" class="remove_ingredient_button">&#10005;</button>
+        </form></td>
+  </tr>
+  <% end %>
+</table>
+
+
+<h2>Add instructions:</h2>
+<form action="/recipe/<%= @recipe.id %>" method="post">
+  <label for="instruction">Add instruction</label>
+  <input type="text" name="instruction" id="instruction" autocomplete="off">
+  <button type="submit" class="btn btn-info">Add</button>
+</form>
+
+<table>
+  <col width="90%">
+  <th>Instructions</th>
+  <th>Remove</th>
+  <% if @instructions_arr %>
+    <% @instructions_arr.each do |instruction, index| %>
+    <tr>
+      <td><%= instruction %></td>
+      <td>
+        <form action="/recipe/<%= @recipe.id %>/delete_instruction" method=post id="instruction_delete">
+          <input name="_method" type="hidden" value="delete">
+          <input type="hidden" name="instruction_to_delete" value="<%= index %>">
+          <button type="submit" class="remove_ingredient_button">&#10005;</button>
+        </form>
+      </td>
+    </tr>
+    <% end %>
+  <% end %>
+</table>
+
+
+<h2>Add a tag to this recepie</h2>
+<form action="/recipe/<%= @recipe.id %>/add_tag" method="post">
+  <label for="tag">Add new tag:</label>
+  <input type="text" name="tag" id="tag" autocomplete="off"><br>
+  <label for="tag">Select a tag:</label>
+  <button type="submit" class="btn btn-info">Add tag</button>
+</form>
+
+<% if @tags %>
+  <% @tags.each do |tag| %>
+  <p><%= tag.tag %></p>
+  <% end %>
+<% end %>
+
+
+<a href="/">Return to recipe list</a>
