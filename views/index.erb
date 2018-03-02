@@ -9,7 +9,7 @@
   <% @recipes.each do |recipe| %>
     <tr>
       <td><a href="/recipe/<%=recipe.id%>"><%= recipe.recipe %></a></td>
-      <td><%= recipe.rating %> stars</td>
+      <td><% if recipe.rating %><%= recipe.rating %> stars<% end %></td>
       <td><form action="/delete_recipe" method=post>
         <input name="_method" type="hidden" value="delete">
         <input type="hidden" name="recipe_to_delete" value="<%= recipe.id %>">

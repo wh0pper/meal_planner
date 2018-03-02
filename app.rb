@@ -75,7 +75,7 @@ end
 
 post('/recipe/:id/add_tag') do
   @recipe = Recipe.find(params['id'].to_i)
-  if !params['tag'].empty? 
+  if !params['tag'].empty?
     new_tag = Tag.create({:tag => params['tag']})
   elsif params['tags']
     new_tag = Tag.find(params['tags'])
@@ -147,11 +147,11 @@ get('/nutrition/:id') do
 end
 
 post('/recipe/:id/update_amount') do
-  new_amount = params['amount'].to_i
+  new_amount = params['amount']
   @recipe = Recipe.find(params['id'].to_i)
   ingredient = Ingredient.find(params['ingredient_to_update'].to_i)
-  @recipe.amounts.where({:ingredient_id => ingredient.id}).update({:amount => new_amount})
-  @ingredients = @recipe.ingredients
+  @recipe.amounts.where({:ingredient_id => ingredient.id, :recipe_id => @recipe.id}).update({:amount => new_amount})
+
   @tags = @recipe.tags
   instructions = @recipe.instructions
   @instructions_arr = instructions.split(",")
