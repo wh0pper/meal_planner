@@ -1,5 +1,5 @@
 <h1>Recipe Box</h1>
-
+<hr>
 <% if @tag %>
   <h2>All recipes for '<%= @tag.tag %>' tag:</h2>
 <% elsif @ingredient %>
@@ -12,6 +12,6 @@
       <td><a href="/recipe/<%=recipe.id%>"><%= recipe.recipe %></a></td>
     </tr>
   <% end %>
-</table>
+</table><br>
 
 <a href="/">Return to recipe list</a>

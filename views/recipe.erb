@@ -1,4 +1,5 @@
-<h1><%= @recipe.recipe %></h1>
+<h1><%= @recipe.recipe.titleize %></h1>
+<hr>
 <h2>Rate recipe! <%= @rating_display %></h2>
 <form action="/recipe/<%= @recipe.id %>/rating" method="post" id="rating_form">
   <button type="submit" name="rating" value="1">&#9733;</button>
@@ -8,16 +9,17 @@
   <button type="submit" name="rating" value="5">&#9733;</button>
 </form>
 
+<hr>
+
 <h2>Add ingredients:</h2>
 <form action="/recipe/<%= @recipe.id %>/new_ingredient" method="post">
   <label for="ingredient">Add an ingredient</label>
   <input type="text" name="ingredient" id="ingredient" autocomplete="off" required>
-  <button type="submit" class="btn btn-info">Add</button>
+  <button type="submit" class="btn btn-dark btn-sm">Add</button>
   <% if @ingredient_error %>
     <%= @ingredient_error %>
   <% end %>
-</form> 
-
+</form><br>
 
 <table>
   <col width="75%">
@@ -42,15 +44,16 @@
         </form></td>
   </tr>
   <% end %>
-</table>
+</table><br>
 
+<hr>
 
 <h2>Add instructions:</h2>
 <form action="/recipe/<%= @recipe.id %>/new_instruction" method="post">
   <label for="instruction">Add instruction</label>
   <input type="text" name="instruction" id="instruction" autocomplete="off" required>
-  <button type="submit" class="btn btn-info">Add</button>
-</form>
+  <button type="submit" class="btn btn-dark btn-sm">Add</button>
+</form><br>
 
 <table>
   <col width="90%">
@@ -70,22 +73,28 @@
     </tr>
     <% end %>
   <% end %>
-</table>
+</table><br>
 
+<hr>
 
-<h2>Add a tag to this recepie</h2>
-<form action="/recipe/<%= @recipe.id %>/add_tag" method="post">
-  <label for="tag">Add new tag:</label>
-  <input type="text" name="tag" id="tag" autocomplete="off" required><br>
-  <label for="tag">Select a tag:</label>
-  <button type="submit" class="btn btn-info">Add tag</button>
-</form>
-
+<h2>Recipe's tags:</h2>
 <% if @tags %>
   <% @tags.each do |tag| %>
-  <p><%= tag.tag %></p>
+    <%= tag.tag %>
   <% end %>
 <% end %>
+<form action="/recipe/<%= @recipe.id %>/add_tag" method="post">
+  <br>
+  <label for="tag">Add new tag:</label>
+  <input type="text" name="tag" id="tag" autocomplete="off"><br>
+  <label for="tags">Select a tag:</label>
+  <select name="tags">
+    <% @all_tags.each do |tag| %>
+      <option value="<%= tag.id %>"><%= tag.tag %></option>
+    <% end %>
+  </select><br>
+  <button type="submit" class="btn btn-dark btn-sm">Add</button>
+</form><br>
 
 <a href="/nutrition/<%= @recipe.id %>">Click here for nutrition information</a><br>
 

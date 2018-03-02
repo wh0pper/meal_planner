@@ -1,4 +1,5 @@
 <h1>Recipe Box</h1>
+<hr>
 <h2>Your recipes:</h2>
 
 <table>
@@ -16,21 +17,25 @@
       </form></td>
     </tr>
   <% end %>
-</table>
+</table><br>
 
 <h2>Add a new recipe:</h2>
 <form action="/" method="post">
 <label for="recipe">Add a recipe</label>
 <input type="text" name="recipe" id="recipe" autocomplete="off">
-<button type="submit" class="btn btn-info">Add recipe!</button>
+<button type="submit" class="btn btn-dark btn-sm">Add recipe!</button>
 </form>
+
+<hr>
 
 <h2>Tags:</h2>
 <% if @tags %>
-<% @tags.each do |tag| %>
-<span class="tag"><a href="/tag/<%= tag.id %>"><%= tag.tag %></a></span>
+  <% @tags.each do |tag| %>
+    <span class="tag"><a href="/tag/<%= tag.id %>"><%= tag.tag %></a></span>
+  <% end %>
 <% end %>
-<% end %>
+
+<hr>
 
 <h2>Find recipes by ingredient:</h2>
 <form class="form-group" action="/recipe_finder" method="post">
@@ -38,8 +43,8 @@
   <% @ingredients.each do |ingredient| %>
     <option value="<%= ingredient.id %>"><%= ingredient.ingredient %></option>
   <% end %>
-</select>
-<button type="submit" class="btn btn-info">Find</button>
+</select><br>
+<button type="submit" class="btn btn-secondary">Find</button>
 </form>
 
 <%= @food_test %>

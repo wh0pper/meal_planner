@@ -32,6 +32,7 @@ get('/recipe/:id') do
   @instructions_arr = instructions.split(",")
   @rating = @recipe.rating
   @rating_display = @rating.to_s + " stars"
+  @all_tags = Tag.all
   erb:recipe
 end
 
@@ -54,6 +55,7 @@ post('/recipe/:id/new_ingredient') do
   @instructions_arr = instructions.split(",")
   @tags = @recipe.tags
   @ingredients = @recipe.ingredients
+  @all_tags = Tag.all
   erb:recipe
 end
 
@@ -66,18 +68,24 @@ post('/recipe/:id/new_instruction') do
   instructions += new_instruction + ","
   @recipe.update({:instructions => instructions})
   @instructions_arr = instructions.split(",")
+  @all_tags = Tag.all
   erb:recipe
 end
 
 
 post('/recipe/:id/add_tag') do
   @recipe = Recipe.find(params['id'].to_i)
-  new_tag = Tag.create({:tag => params['tag']})
+  if !params['tag'].empty? 
+    new_tag = Tag.create({:tag => params['tag']})
+  elsif params['tags']
+    new_tag = Tag.find(params['tags'])
+  end
   @recipe.tags.push(new_tag)
   @tags = @recipe.tags
   @ingredients = @recipe.ingredients
   instructions = @recipe.instructions
   @instructions_arr = instructions.split(",")
+  @all_tags = Tag.all
   erb:recipe
 end
 
@@ -88,6 +96,7 @@ delete('/recipe/:id/delete_ingredient') do
   @ingredients = @recipe.ingredients
   instructions = @recipe.instructions
   @instructions_arr = instructions.split(",")
+  @all_tags = Tag.all
   erb:recipe
 end
 
@@ -100,6 +109,7 @@ delete('/recipe/:id/delete_instruction') do
   new_instructions = @instructions_arr.join(',')
   @recipe.update({:instructions => new_instructions})
   @ingredients = @recipe.ingredients
+  @all_tags = Tag.all
   erb:recipe
 end
 
@@ -109,6 +119,7 @@ delete('/delete_recipe') do
   ingredients_delete.each  do |ingredient|
     ingredient.destroy
   end
+  recipe_delete.amounts.destroy_all
   recipe_delete.destroy
   @recipes = Recipe.all
   @tags = Tag.all
@@ -145,6 +156,7 @@ post('/recipe/:id/update_amount') do
   instructions = @recipe.instructions
   @instructions_arr = instructions.split(",")
   @amounts = @recipe.amounts
+  @all_tags = Tag.all
   erb:recipe
 end
 
@@ -161,5 +173,6 @@ post('/recipe/:id/rating') do
   @tags = @recipe.tags
   instructions = @recipe.instructions
   @instructions_arr = instructions.split(",")
+  @all_tags = Tag.all
   erb:recipe
 end
