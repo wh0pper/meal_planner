@@ -1,5 +1,12 @@
 <h1><%= @recipe.recipe %></h1>
-
+<h2>Rate recipe! <%= @rating_display %></h2>
+<form action="/recipe/<%= @recipe.id %>/rating" method="post" id="rating_form">
+  <button type="submit" name="rating" value="1">&#9733;</button>
+  <button type="submit" name="rating" value="2">&#9733;</button>
+  <button type="submit" name="rating" value="3">&#9733;</button>
+  <button type="submit" name="rating" value="4">&#9733;</button>
+  <button type="submit" name="rating" value="5">&#9733;</button>
+</form>
 
 <h2>Add ingredients:</h2>
 <form action="/recipe/<%= @recipe.id %>/new_ingredient" method="post">
@@ -9,7 +16,7 @@
   <% if @ingredient_error %>
     <%= @ingredient_error %>
   <% end %>
-</form>
+</form> 
 
 
 <table>

@@ -3,10 +3,12 @@
 
 <table>
   <th>Recipes</th>
+  <th>Rating</th>
   <th>Remove</th>
   <% @recipes.each do |recipe| %>
     <tr>
       <td><a href="/recipe/<%=recipe.id%>"><%= recipe.recipe %></a></td>
+      <td><%= recipe.rating %> stars</td>
       <td><form action="/delete_recipe" method=post>
         <input name="_method" type="hidden" value="delete">
         <input type="hidden" name="recipe_to_delete" value="<%= recipe.id %>">

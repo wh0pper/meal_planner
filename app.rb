@@ -30,6 +30,8 @@ get('/recipe/:id') do
   @tags = @recipe.tags
   instructions = @recipe.instructions
   @instructions_arr = instructions.split(",")
+  @rating = @recipe.rating
+  @rating_display = @rating.to_s + " stars"
   erb:recipe
 end
 
@@ -143,5 +145,21 @@ post('/recipe/:id/update_amount') do
   instructions = @recipe.instructions
   @instructions_arr = instructions.split(",")
   @amounts = @recipe.amounts
+  erb:recipe
+end
+
+post('/recipe/:id/rating') do
+  @recipe = Recipe.find(params['id'].to_i)
+  @recipe.update({:rating => params['rating'].to_i})
+  if @recipe.rating
+    @rating = @recipe.rating
+    @rating_display = @rating.to_s + " stars"
+  else
+    @rating_display = "not yet rated"
+  end
+  @ingredients = @recipe.ingredients
+  @tags = @recipe.tags
+  instructions = @recipe.instructions
+  @instructions_arr = instructions.split(",")
   erb:recipe
 end

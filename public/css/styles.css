@@ -19,3 +19,28 @@ td, th {
 .tag {
   color: green;
 }
+
+#rating_form {
+  cursor: pointer;
+}
+
+button[name=rating] {
+  border: none;
+  margin: 0px;
+  width: 25px;
+  opacity: 1;
+  font-size: 25px;
+}
+
+button[name=rating]:hover {
+  cursor: default;
+}
+
+button[name=rating]:hover ~ button[name=rating]  {
+  opacity: .5;
+}
+
+button[name=rating]:focus {
+  outline:0;
+  cursor: default;
+}
